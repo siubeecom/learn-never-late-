@@ -1,0 +1,114 @@
+
+
+
+<!DOCTYPE html> <html lang="zh-Hant"> <head> <meta charset="UTF-8" /> <meta name="viewport" content="width=device-width, initial-scale=1" /> <title>小孩互動網頁</title> <style>
+
+
+
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>小孩互動網頁</title>
+<style>
+  body { font-family: Arial, sans-serif; text-align: center; margin: 20px; }
+  #container { position: relative; display: inline-block; }
+  #background {
+    width: 400px;
+    height: 300px;
+    background-image: url('https://i.imgur.com/2bGJa9U.jpg'); /* 替換成你的繪畫圖片網址 */
+    background-size: cover;
+    border: 2px solid #333;
+  }
+  .button {
+    position: absolute;
+    cursor: pointer;
+    border-radius: 50%;
+    background-color: rgba(255,255,255,0.6);
+    border: 2px solid #666;
+    width: 60px;
+    height: 60px;
+    line-height: 60px;
+    font-weight: bold;
+    user-select: none;
+  }
+  #musicBox {
+    top: 50px;
+    left: 50px;
+  }
+  #dictionary {
+    top: 200px;
+    left: 150px;
+  }
+  #photo {
+    top: 100px;
+    left: 300px;
+  }
+  #popup {
+    display: none;
+    position: fixed;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    border: 3px solid #444;
+    padding: 20px;
+    z-index: 10;
+  }
+  #popup img {
+    max-width: 300px;
+  }
+  #popup button {
+    margin-top: 10px;
+  }
+  #overlay {
+    display:none;
+    position: fixed;
+    top:0; left:0;
+    width:100%; height:100%;
+    background: rgba(0,0,0,0.5);
+    z-index: 5;
+  }
+</style>
+</head>
+<body>
+
+<h2>小孩互動網頁範例</h2>
+<div id="container">
+  <div id="background"></div>
+  <div class="button" id="musicBox" title="點我聽音樂">🎵</div>
+  <div class="button" id="dictionary" title="點我查生字">📖</div>
+  <div class="button" id="photo" title="點我看照片">🖼️</div>
+</div>
+
+<!-- 音樂播放器 (隱藏) -->
+<audio id="audioPlayer" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"></audio>
+
+<!-- 彈窗和遮罩 -->
+<div id="overlay"></div>
+<div id="popup">
+  <div id="popupContent"></div>
+  <button onclick="closePopup()">關閉</button>
+</div>
+
+<script>
+  const audioPlayer = document.getElementById('audioPlayer');
+  const popup = document.getElementById('popup');
+  const popupContent = document.getElementById('popupContent');
+  const overlay = document.getElementById('overlay');
+
+  function showPopup(contentHtml) {
+    popupContent.innerHTML = contentHtml;
+    popup.style.display = 'block';
+    overlay.style.display = 'block';
+  }
+
+  function closePopup() {
+    popup.style.display = 'none';
+    overlay.style.display = 'none';
+    audioPlayer.pause();
+    audioPlayer.currentTime = 0;
+  }
+
+  document.getElementById('musicBox').addEventListener('click', () => {
+    // 播放音樂
